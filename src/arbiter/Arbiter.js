@@ -1,4 +1,4 @@
-import { getBishopMoves, getKingMoves, getKnightMoves, getQueenMoves, getRookMoves } from './GetMoves'
+import { getBishopMoves, getKingMoves, getKnightMoves, getPawnCaptures, getPawnMoves, getQueenMoves, getRookMoves } from './GetMoves'
 
 const arbiter = {
 
@@ -18,6 +18,15 @@ const arbiter = {
         if(piece.endsWith('r'))
         return getRookMoves({position,piece,rank,file});
 
+        if(piece.endsWith('p'))
+        return [
+
+            ...getPawnMoves({position,piece,rank,file}),
+            ...getPawnCaptures({position,piece,rank,file})
+
+        ]
+    
+        getPawnMoves({position,piece,rank,file});
 
 
 
