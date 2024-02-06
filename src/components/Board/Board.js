@@ -2,7 +2,9 @@ import './Board.css'
 import Files from './bits/Files'
 import Ranks from './bits/Ranks'
 import Pieces from './pieces/Pieces'
+import Popup from './Popup/Popup'
 import { useAppContext } from '../../context/Context'
+import PromotionBox from './Popup/PromotionBox/PromotionBox'
 
 
 
@@ -49,6 +51,10 @@ const Board = () =>{
     </div>
 
     <Pieces/>
+
+    <Popup>
+            <PromotionBox />
+        </Popup>
 
     <Files files={files}/>
 
