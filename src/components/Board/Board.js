@@ -5,6 +5,8 @@ import Pieces from './pieces/Pieces'
 import Popup from './Popup/Popup'
 import { useAppContext } from '../../context/Context'
 import PromotionBox from './Popup/PromotionBox/PromotionBox'
+import arbiter from '../../arbiter/Arbiter'
+import { getKingPosition } from '../../arbiter/GetMoves'
 
 
 
@@ -14,6 +16,18 @@ const Board = () =>{
      
     const { appState } = useAppContext();
     const position = appState.position[appState.position.length - 1]
+    const checkTile = (() => {
+        const isInCheck =  (arbiter.isPlayerInCheck({
+            positionAfterMove : position,
+            player : appState.turn
+        }))
+
+        if (isInCheck)
+            return getKingPosition (position, appState.turn)
+
+        return null
+    })()
+
     const getClassName = (i,j) => {
         let c = 'tile'
         c+= (i+j)%2 === 0 ? ' tile--dark ' : ' tile--light '
@@ -23,6 +37,10 @@ const Board = () =>{
             else 
                 c+= ' highlight'
         }
+        if (checkTile && checkTile[0] === i && checkTile[1] === j) {
+            c+= ' checked'
+        }
+
 
 
 
@@ -45,8 +63,8 @@ const Board = () =>{
                     key={file+''+rank} 
                     i={i}
                     j={j}
-                    className={getClassName(7-i,j)}>
-                </div>
+                    className={`${getClassName(7-i,j)}`}>
+                    </div>
             ))}
     </div>
 
