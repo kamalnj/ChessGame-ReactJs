@@ -7,6 +7,7 @@ import { useAppContext } from '../../context/Context'
 import PromotionBox from './Popup/PromotionBox/PromotionBox'
 import arbiter from '../../arbiter/Arbiter'
 import { getKingPosition } from '../../arbiter/GetMoves'
+import GameEnds from './Popup/GameEnds/GameEnds'
 
 
 
@@ -72,6 +73,7 @@ const Board = () =>{
 
     <Popup>
             <PromotionBox />
+            <GameEnds />
         </Popup>
 
     <Files files={files}/>
