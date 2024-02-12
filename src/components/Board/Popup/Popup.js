@@ -17,11 +17,10 @@ const Popup = ({children}) => {
         return null
 
     return <div className="popup">
-        {React.Children
+
+{React.Children
             .toArray(children)
             .map (child => React.cloneElement(child, { onClosePopup }))}
-            <PromotionBox onClosePopup={onClosePopup}/>
-
     </div>
 }
 

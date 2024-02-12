@@ -72,9 +72,9 @@ const Board = () =>{
     <Pieces/>
 
     <Popup>
-            <PromotionBox />
+    <PromotionBox />
             <GameEnds />
-        </Popup>
+    </Popup>
 
     <Files files={files}/>
 

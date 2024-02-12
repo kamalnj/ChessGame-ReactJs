@@ -59,6 +59,23 @@ export const reducer = (state, action) => {
                 castleDirection,
             }
         }
+        case actionType.WIN : {
+            return {
+                ...state,
+                status : action.payload === 'w' ? Status.white : Status.black
+            }
+        }
+        case actionType.NEW_GAME : {
+            return {
+                ...action.payload,
+            }
+        }
+        case actionType.STALEMATE : {
+            return {
+                ...state,
+                status : Status.stalemate
+            }
+        }
         default : 
             return state
     }
