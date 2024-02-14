@@ -7,6 +7,7 @@ import arbiter from '../../../arbiter/Arbiter';
 import { openPromotion } from '../../../reducer/actions/popup';
 import { detectInsufficientMaterial, detectStalemate, updateCastling,detectCheckmate } from '../../../reducer/actions/Game';
 import { getCastlingDirections } from '../../../arbiter/GetMoves';
+import { getNewMoveNotation } from '../Helper';
 
 const Pieces = () => {
 
@@ -64,18 +65,21 @@ const Pieces = () => {
                 piece,rank,file,
                 x,y
             })
-            dispatch(makeNewMove({newPosition}))
+            const newMove = getNewMoveNotation({
+                piece,rank,file,x,y,position : currentPosition
+            })
+            dispatch(makeNewMove({newPosition,newMove}))
 
 
-            // if (arbiter.insufficientMaterial(newPosition))
-            // dispatch(detectInsufficientMaterial())
-         if (arbiter.isStalemate(newPosition,opponent,castleDirection)){
+            if (arbiter.insufficientMaterial(newPosition))
+            dispatch(detectInsufficientMaterial())
+         else if (arbiter.isStalemate(newPosition,opponent,castleDirection)){
             dispatch(detectStalemate())
 
             }
-        // else if (arbiter.isCheckMate(newPosition,opponent,castleDirection)){
-        //         dispatch(detectCheckmate(piece[0]))
-        //     }
+        else if (arbiter.isCheckMate(newPosition,opponent,castleDirection)){
+                dispatch(detectCheckmate(piece[0]))
+            }
         }
         dispatch(clearCandidates())
     }

@@ -8,6 +8,7 @@ const actionType = {
     "PROMOTION_OPEN" : "PROMOTION_OPEN",
     "STALEMATE" : "STALEMATE",
     "WIN" : "WIN",
+    "TAKE_BACK" : "TAKE_BACK",
     "INSUFFICIENT_MATERIAL" : "INSUFFICIENT_MATERIAL",
 
 }

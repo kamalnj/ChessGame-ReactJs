@@ -3,7 +3,6 @@ import { useAppContext } from '../../../context/Context'
 import { Status } from '../../../Constant'
 import { closPopup } from '../../../reducer/actions/popup'
 import React from 'react'
-import PromotionBox from './PromotionBox/PromotionBox'
 
 const Popup = ({children}) => {
 
@@ -17,8 +16,7 @@ const Popup = ({children}) => {
         return null
 
     return <div className="popup">
-
-{React.Children
+        {React.Children
             .toArray(children)
             .map (child => React.cloneElement(child, { onClosePopup }))}
     </div>

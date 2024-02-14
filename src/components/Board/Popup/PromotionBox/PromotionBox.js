@@ -1,24 +1,21 @@
 import { useAppContext } from '../../../../context/Context';
-import { copyPosition } from '../../Helper';
+import { copyPosition, getNewMoveNotation  } from '../../Helper';
 import Piece from '../../pieces/Piece';
 import './PromotionBox.css'
 import React from 'react';
 import { clearCandidates, makeNewMove } from '../../../../reducer/actions/Move';
 
 const PromotionBox = ({onClosePopup}) => {
-    const options = ['q','r','b','n']
-    
-    const {appState , dispatch} = useAppContext()
-    const {promotionSquare} = appState
 
-    if (!promotionSquare) 
+    const { appState , dispatch } = useAppContext();
+    const {promotionSquare} = appState;
+
+    if (!promotionSquare)
         return null
 
     const color = promotionSquare.x === 7 ? 'w' : 'b'
+    const options = ['q','r','b','n']
 
-    
-    
-    
     const getPromotionBoxPosition = () => {
         let style = {}
 
@@ -36,31 +33,43 @@ const PromotionBox = ({onClosePopup}) => {
             style.right = '0%'
         }
         else {
-            style.left = `${12.5 * promotionSquare.y - 20}%`
+            style.left = `${12.5*promotionSquare.y - 20}%`
         }
 
         return style
     }
-    const onClick = option =>{
+
+    const onClick = option => {
         onClosePopup()
-        const newPosition = copyPosition(appState.position[appState.position.length - 1])
+        const newPosition = copyPosition (appState.position[appState.position.length - 1])
 
         newPosition[promotionSquare.rank][promotionSquare.file] = ''
-        newPosition[promotionSquare.x][promotionSquare.y] = color + option
+        newPosition[promotionSquare.x][promotionSquare.y] = color+option
+
+        
+  
 
         dispatch(clearCandidates())
-        dispatch(makeNewMove({newPosition}))
 
+        const newMove = getNewMoveNotation({
+            ...promotionSquare,
+            piece : color + 'p',
+            promotesTo : option,
+            position: appState.position[appState.position.length - 1]
+        })
 
+        dispatch(makeNewMove({newPosition , newMove}))
     }
 
-    return <div className='popup-inner promotion-choices' style={getPromotionBoxPosition()}>
-         {options.map(option => 
-         <div key={option}
-         className={`piece ${color}${option}`}
-         onClick={()=>onClick(option)}>
-         </div>)}
+    return <div className="popup--inner promotion-choices" style={getPromotionBoxPosition()}>
+        {options.map (option => 
+            <div key={option}
+                onClick = {() => onClick(option)} 
+                className={`piece ${color}${option}`}
+            />
+        )}
     </div>
+
 }
 
-export default PromotionBox;
+export default PromotionBox
